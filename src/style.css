@@ -6,3 +6,7 @@
 @media print{body{background:white}.sidebar,.topbar,.page-head,.footer,#toast,.no-print,.skip{display:none!important}.shell{margin:0}main{padding:0;max-width:none}.proposal{border:0;padding:15px;max-width:none}.proposal td,.proposal th{white-space:normal}.badge{print-color-adjust:exact}.proposal-note{break-inside:avoid}a{text-decoration:none}}
 @media(prefers-reduced-motion:no-preference){.btn,.nav button{transition:background .15s}.panel,.stat{animation:appear .3s ease both}@keyframes appear{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+
+@media(max-width:600px){.page-head{flex-wrap:wrap}.page-head>.actions{width:100%;justify-content:flex-start}.proposal-top .proposal-meta{font-size:11px}.summary-row{gap:10px}}
+
+@media(min-width:851px) and (max-width:1100px){.editor{grid-template-columns:1fr}.summary-panel{position:static}}

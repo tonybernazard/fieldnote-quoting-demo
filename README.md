@@ -1,5 +1,7 @@
 # Fieldnote
 
+[Open the live demo](https://tonybernazard.github.io/fieldnote-quoting-demo/)
+
 A thoughtfully designed quoting and job-tracking workspace for an independent creative studio. Built as an original, interactive portfolio demonstration for Tony Bernazard.
 
 ## What you can explore
@@ -41,7 +43,9 @@ CHROMIUM_PATH=/path/to/chromium npm run test:e2e
 
 `CHROMIUM_PATH` defaults to `/usr/bin/chromium`. `BASE_URL` defaults to http://127.0.0.1:4173. The suite exercises quote create/update/delete, live totals, jobs, client editing, search, JSON download, print PDF, reset, and mobile overflow. Screenshots and a sample PDF are written to `screenshots/`.
 
-Validation at initial source handoff: all seven Node tests passed. The automated Chromium flow suite could not run in the build sandbox because native socket creation was blocked; it is included for reproducible testing rather than represented as passed. Live deployment browser validation is performed separately.
+Validation: all seven Node tests passed. Independent live desktop browser QA verified quote creation, editing and deletion; the $97.40 calculation example; accepted-quote job creation; job-stage persistence after reload; client creation and editing; search; actual JSON download; dialog forward/reverse keyboard focus trapping and Escape focus return; linked-job deletion; and reset to four original quotes with the test client removed. No site-origin browser errors were observed. Desktop overview and proposal screenshots were visually reviewed.
+
+The automated Chromium flow suite could not run in the build sandbox because native socket creation was blocked; it is provided for reproducible testing, not represented as passed. Responsive layouts were source-reviewed and hardened for phone/tablet breakpoints, but mobile runtime behavior has not been independently browser-tested. Print / PDF is implemented with native browser printing and print CSS; actual printed output was not verified because the cloud browser did not expose a print dialog.
 
 ## Calculation rules
 

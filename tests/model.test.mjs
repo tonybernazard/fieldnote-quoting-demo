@@ -1,0 +1,9 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {calculate,seed,load,persist,saveQuote,setQuoteStatus,STORAGE_KEY} from '../src/model.js';
+test('exact cents: quantity, discount, tax applied after discount',()=>{assert.deepEqual(calculate([{quantity:2,rate:19.99},{quantity:1.5,rate:40}],10,8.25),{subtotal:9998,discountAmount:1000,taxAmount:742,total:9740});});
+test('line rounding and zero values',()=>{assert.equal(calculate([{quantity:0.5,rate:.01},{quantity:1,rate:0}]).total,1);assert.equal(calculate([],10,8).total,0);});
+test('discount and tax bounded',()=>{assert.equal(calculate([{quantity:1,rate:100}],120,10).total,0);assert.equal(calculate([{quantity:1,rate:100}],-5,0).total,10000);});
+test('create and update quote without duplication',()=>{const s=seed(),q={...s.quotes[0],id:'new'};saveQuote(s,q);assert.equal(s.quotes.length,5);saveQuote(s,{...q,title:'Updated'});assert.equal(s.quotes.length,5);assert.equal(s.quotes.at(-1).title,'Updated');});
+test('acceptance creates one job, even after repeated status changes',()=>{const s=seed();setQuoteStatus(s,'q2','Accepted');setQuoteStatus(s,'q2','Sent');setQuoteStatus(s,'q2','Accepted');assert.equal(s.jobs.filter(j=>j.quoteId==='q2').length,1);assert.throws(()=>setQuoteStatus(s,'q2','Bad'));});
+test('storage roundtrip and malformed storage recovery',()=>{const data=new Map(),store={setItem:(k,v)=>data.set(k,v),getItem:k=>data.get(k)};const s=seed();s.clients[0].name='Saved';persist(s,store);assert.deepEqual(load(store),s);data.set(STORAGE_KEY,'bad json');assert.equal(load(store).clients[0].name,'Juniper House');data.set(STORAGE_KEY,'{"version":99}');assert.equal(load(store).version,1);});
+test('seed calls are independent',()=>{const a=seed();a.quotes.pop();assert.equal(seed().quotes.length,4);});
